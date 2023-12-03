@@ -93,8 +93,8 @@ async function updateDatabaseSapces(ordeIDs) {
             )
         }
         return true;
-    } catch(err) {
-        console.log('Error conection to the Database: ', err)
+    } catch(error) {
+        console.log('Error conection to the Database: ', error)
         return false;
     } finally {
         await client.close();
@@ -103,9 +103,15 @@ async function updateDatabaseSapces(ordeIDs) {
 
 //Get lessons data and search functionality
 app.get("/lessons", (req, res) => {
-    //res.header("Access-Control-Allow-Origin", "*");
+    let searchValue;
 
-    let searchValue = req.query.src;
+    if(req.query.src == undefined) {
+        searchValue = '';
+    } else {
+        searchValue = req.query.src;
+    }
+  
+
     let querry = {
         $or: [
             { subject: { $regex: searchValue , $options: 'i' } }, 
