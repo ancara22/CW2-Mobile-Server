@@ -3,7 +3,7 @@ const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const  bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
-const serverless = require('serverless-http')
+const serverless = require('aws-serverless-express');
 
 const app = express();
 
@@ -163,4 +163,7 @@ app.put("/update-spaces", async (req, res) => {
 })
 
 
-module.exports.handler = serverless(app);
+const server = serverless.createServer(app);
+
+//Export the handler function
+exports.handler = (event, context) => serverless.proxy(server, event, context);
