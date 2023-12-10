@@ -2,9 +2,10 @@ const express = require("express");
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const  bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
+const serverless = require('serverless-http')
 
 const app = express();
-const port = 3000;
 
 app.use(bodyParser.json());
 
@@ -20,6 +21,17 @@ app.use((req, res, next) => {
     console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
     next();
 })
+
+//Image middleware handling
+app.use('/images', express.static(path.join(__dirname, 'images'), { fallthrough: false }));
+
+app.use((err, req, res, next) => {
+    if (err.code === 'ENOENT') {
+      res.status(404).send('Image not found');
+    } else {
+      next("Error:" + err);
+    }
+});
 
 
 //Mongo DB URI
@@ -67,7 +79,7 @@ async function placeOrder(order) {
             console.log('Failed to insert the order.');
             return false; 
         }
-    } catch(e) {
+    } catch(err) {
         console.log('Error conection to the Database: ', err)
         return false;
     } finally {
@@ -151,7 +163,4 @@ app.put("/update-spaces", async (req, res) => {
 })
 
 
-//Listen the server
-app.listen(port, () => {
-    console.log('Server is run on port: ', port)
-})
+module.exports.handler = serverless(app);
