@@ -25,6 +25,7 @@ app.use((req, res, next) => {
 //Image middleware handling
 app.use('/images', express.static(path.join(__dirname, 'images'), { fallthrough: false }));
 
+//Image handler
 app.use((err, req, res, next) => {
     if (err.code === 'ENOENT') {
       res.status(404).send('Image not found');
@@ -32,7 +33,6 @@ app.use((err, req, res, next) => {
       next("Error:" + err);
     }
 });
-
 
 //Mongo DB URI
 const mongoPassword = "YYBsmknVzWQwEume";
@@ -85,7 +85,6 @@ async function placeOrder(order) {
     } finally {
         await client.close();
     }
-
 }
 
 //Update the database/lessons spaces
@@ -122,7 +121,6 @@ app.get("/lessons", (req, res) => {
     } else {
         searchValue = req.query.src;
     }
-  
 
     let querry = {
         $or: [
@@ -161,7 +159,6 @@ app.put("/update-spaces", async (req, res) => {
         res.sendStatus(500);
     }
 })
-
 
 const server = serverless.createServer(app);
 
