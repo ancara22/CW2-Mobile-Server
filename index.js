@@ -6,6 +6,7 @@ const path = require('path');
 const serverless = require('aws-serverless-express');
 
 const app = express();
+let port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
@@ -160,7 +161,14 @@ app.put("/update-spaces", async (req, res) => {
     }
 })
 
-const server = serverless.createServer(app);
+app.listen(port, () => {
+    console.log(`Server is listed`);
+});
+
+
 
 //Export the handler function
-exports.handler = (event, context) => serverless.proxy(server, event, context);
+//Version for AWS S3 deployment 
+
+//const server = serverless.createServer(app);
+//exports.handler = (event, context) => serverless.proxy(server, event, context);
