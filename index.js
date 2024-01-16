@@ -6,7 +6,7 @@ const path = require('path');
 //const serverless = require('aws-serverless-express');
 
 const app = express();
-let port = process.env.PORT || 3000;
+let port = process.env.PORT || 8080;
 
 app.use(bodyParser.json());
 
