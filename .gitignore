@@ -1,5 +1,5 @@
 # Dependencies
-#node_modules
+node_modules
 
 # Environment variables
 .env
@@ -16,7 +16,7 @@ logs/
 .DS_Store
 .DS_Store/
 Thumbs.db
-#package-lock.json
+package-lock.json
 
 # User-specific files
 *.sublime-project
