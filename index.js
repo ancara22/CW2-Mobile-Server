@@ -3,7 +3,7 @@ const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const  bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
-const serverless = require('aws-serverless-express');
+//const serverless = require('aws-serverless-express');
 
 const app = express();
 let port = process.env.PORT || 3000;
@@ -11,11 +11,7 @@ let port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 
 //Hadle the acces
-app.use(cors({
-    origin: '*', 
-    methods: 'GET,PUT,POST',
-    credentials: true,
-}));
+app.use(cors());
 
 //Handle the log
 app.use((req, res, next) => {
